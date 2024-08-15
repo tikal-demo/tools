@@ -79,5 +79,8 @@ build_and_push:
   only:
     refs:
       - branches
+  artifacts:
+    reports:
+      dotenv: vars.env
 
 
