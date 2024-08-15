@@ -20,7 +20,7 @@ prepare:
     - echo "Preparing environment"
     - calculatedSha=$(git rev-parse --short $CI_COMMIT_SHA)
     - echo "short_sha=$calculatedSha" >> vars.env
-    - echo $short_sha
+    - echo $calculatedSha
     - export SHORT_SHA=$calculatedSha
   artifacts:
     reports:
