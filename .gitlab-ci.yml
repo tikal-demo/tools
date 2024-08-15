@@ -62,11 +62,9 @@ build_and_push:
     - docker:dind
   script:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    # - sleep 10
-    - docker context create builder
-    - docker buildx create builder --use
-    # - docker buildx create --use
-    - docker buildx inspect builder --bootstrap
+    - sleep 20
+    - docker buildx create --use
+    - docker buildx inspect --bootstrap
     - echo $REGISTRY
     - echo $IMAGE_NAME
     - echo $SRTAG
