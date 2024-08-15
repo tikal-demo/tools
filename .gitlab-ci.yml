@@ -5,8 +5,8 @@ stages:
 variables:
   REGISTRY: "$CI_REGISTRY"
   IMAGE_NAME: "$CI_PROJECT_PATH"
-  # DOCKER_HOST: tcp://docker:2375/
-  # DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_TLS_CERTDIR: ""
 
 default:
   image: gitlab.tikalk.dev:5050/tikalk/engineering/bootstrap/tools/main:latest
@@ -62,9 +62,9 @@ build_and_push:
     - docker:dind
   script:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    # - sleep 20 
-    # - docker buildx create --use
-    # - docker buildx inspect --bootstrap
+    - sleep 20 
+    - docker buildx create --use
+    - docker buildx inspect --bootstrap
     - |
       docker buildx build --platform linux/amd64,linux/arm64 \
         --build-arg SRTAG=$SRTAG \
