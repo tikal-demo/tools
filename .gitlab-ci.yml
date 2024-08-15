@@ -33,7 +33,7 @@ semantic_release_prep:
   stage: prepare
   script:
     - npm install -g semantic-release
-    - npm install -g @semantic-release/git @semantic-release/github @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/exec
+    - npm install -g @semantic-release/git @semantic-release/gitlab @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/exec
     - |
       cat <<EOF > .releaserc.yml
       branches:
@@ -43,14 +43,14 @@ semantic_release_prep:
       plugins:
         - "@semantic-release/commit-analyzer"
         - "@semantic-release/release-notes-generator"
+        - "@semantic-release/changelog"
         - "@semantic-release/git"
-        - "@semantic-release/github"
-        - - "@semantic-release/exec"
-          - verifyReleaseCmd: echo \${nextRelease.version} > nextVersion
+        - "@semantic-release/gitlab"
+        - "@semantic-release/exec"
       EOF
     - semantic-release --dry-run --debug
     - if [ -f nextVersion ]; then echo "SRTAG=v$(cat nextVersion)" >> vars.env; else echo "SRTAG=$SHORT_SHA" >> vars.env; fi
-    - echo $SRTAG
+    - cat vars.env
   artifacts:
     reports:
       dotenv: vars.env
