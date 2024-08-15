@@ -48,7 +48,7 @@ semantic_release_prep:
         - - "@semantic-release/exec"
           - verifyReleaseCmd: echo \${nextRelease.version} > nextVersion
       EOF
-    - semantic-release
+    - semantic-release --dry-run --debug
     - if [ -f nextVersion ]; then echo "SRTAG=v$(cat nextVersion)" >> vars.env; else echo "SRTAG=$SHORT_SHA" >> vars.env; fi
     - echo $SRTAG
   artifacts:
