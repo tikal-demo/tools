@@ -50,6 +50,7 @@ semantic_release_prep:
       EOF
     - semantic-release --dry-run
     - if [ -f nextVersion ]; then echo "SRTAG=v$(cat nextVersion)" >> vars.env; else echo "SRTAG=$SHORT_SHA" >> vars.env; fi
+    - echo $SRTAG
   artifacts:
     reports:
       dotenv: vars.env
