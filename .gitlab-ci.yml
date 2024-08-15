@@ -55,6 +55,7 @@ semantic_release_prep:
 
 build_and_push:
   stage: build
+  image: docker:latest
   script:
     - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker buildx create --use
