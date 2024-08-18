@@ -26,6 +26,12 @@ prepare:
   artifacts:
     reports:
       dotenv: vars.env
+  variables:
+    GIT_CREDENTIALS: "https://${CI_JOB_TOKEN}@gitlab.tikalk.dev/${CI_PROJECT_PATH}.git"
+  before_script:
+    - git config --global user.email "evgeni.sakhatsky@tikalk.com"
+    - git config --global user.name "evgeni.sakhatsky"
+    - git remote set-url origin "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.tikalk.dev/${CI_PROJECT_PATH}.git"
 
 
 semantic_release_prep:
