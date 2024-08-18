@@ -21,10 +21,8 @@ prepare:
   script:
     - echo "Preparing environment"
     - calculatedSha=$(git rev-parse --short $CI_COMMIT_SHA)
-    - echo "short_sha=$calculatedSha" >> vars.env
+    - echo "SHORT_SHA=$calculatedSha" >> vars.env
     - echo $calculatedSha
-    - export SHORT_SHA=$calculatedSha
-    - echo $SHORT_SHA
   artifacts:
     reports:
       dotenv: vars.env
@@ -42,6 +40,8 @@ semantic_release_prep:
         - main
         - name: dev
           prerelease: true
+        - name: $CI_COMMIT_REF_NAME
+          prerelease: true
       plugins:
         - "@semantic-release/commit-analyzer"
         - "@semantic-release/release-notes-generator"
@@ -54,7 +54,7 @@ semantic_release_prep:
     - if [ -f nextVersion ]; then 
         echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
       else 
-        echo "SRTAG=$SHORT_SHA" >> vars.env; 
+        echo "SRTAG=${SHORT_SHA:-latest}" >> vars.env;
       fi
     - cat vars.env
   artifacts:
