@@ -50,7 +50,8 @@ semantic_release_prep:
         - "@semantic-release/gitlab"
         - "@semantic-release/exec"
       EOF
-    - semantic-release --debug
+    - cat nextVersion
+    - semantic-release --dry-run --debug
     - if [ -f nextVersion ]; then 
         echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
       else 
