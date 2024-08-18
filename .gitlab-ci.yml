@@ -40,8 +40,6 @@ semantic_release_prep:
         - main
         - name: dev
           prerelease: true
-        - name: $CI_COMMIT_REF_NAME
-          prerelease: true
       plugins:
         - "@semantic-release/commit-analyzer"
         - "@semantic-release/release-notes-generator"
