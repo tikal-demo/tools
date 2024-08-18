@@ -9,9 +9,9 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 default:
-  image: docker:latest
+  image: ubuntu:latest
   services:
-    - docker:dind
+    - docker
 
 before_script:
   - apk add --no-cache curl jq git
