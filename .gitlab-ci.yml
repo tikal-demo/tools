@@ -49,7 +49,7 @@ semantic_release_prep:
         - "@semantic-release/git"
         - "@semantic-release/gitlab"
         - "@semantic-release/exec"
-          - verifyReleaseCmd: echo ${nextRelease.version} > nextVersion
+        - verifyReleaseCmd: echo ${nextRelease.version} > nextVersion
       EOF
     - semantic-release --debug
     - if [ -f nextVersion ]; then 
