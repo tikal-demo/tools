@@ -9,12 +9,17 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 default:
-  image: node:12.16.1
+  image: docker:latest
   services:
     - docker:dind
 
 before_script:
-  - apk add --no-cache curl jq nodejs npm git
+  - apk add --no-cache curl jq git
+  - bash -c "curl -o node-v12.16.1-linux-x64.tar.xz https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz"
+  - bash -c "tar -xf node-v12.16.1-linux-x64.tar.xz"
+  - bash -c "cp -r node-v12.16.1-linux-x64/* /usr/local/"
+  - bash -c "rm -rf node-v12.16.1-linux-x64.tar.xz node-v12.16.1-linux-x64"
+  - node -v  # Just to confirm the installed version
 
 prepare:
   stage: .pre
