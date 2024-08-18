@@ -9,7 +9,7 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 default:
-  image: gitlab.tikalk.dev:5050/tikalk/engineering/bootstrap/tools/main:latest
+  image: docker:latest
   services:
     - docker:dind
 
