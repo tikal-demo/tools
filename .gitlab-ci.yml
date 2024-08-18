@@ -50,12 +50,17 @@ semantic_release_prep:
         - "@semantic-release/gitlab"
         - "@semantic-release/exec"
       EOF
-    - semantic-release --dry-run --debug
-    - if [ -f nextVersion ]; then echo "SRTAG=v$(cat nextVersion)" >> vars.env; else echo "SRTAG=$SHORT_SHA" >> vars.env; fi
+    - semantic-release --debug
+    - if [ -f nextVersion ]; then 
+        echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
+      else 
+        echo "SRTAG=$SHORT_SHA" >> vars.env; 
+      fi
     - cat vars.env
   artifacts:
     reports:
       dotenv: vars.env
+
 
 
 build_and_push:
