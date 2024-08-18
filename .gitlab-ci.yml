@@ -27,6 +27,7 @@ prepare:
     reports:
       dotenv: vars.env
 
+
 semantic_release_prep:
   stage: prepare
   script:
@@ -48,19 +49,22 @@ semantic_release_prep:
         - "@semantic-release/git"
         - "@semantic-release/gitlab"
         - "@semantic-release/exec"
-      tagFormat: 'v\${version}'  # Ensure the format is correct for semantic-release
+        - "@semantic-release/npm"
+        - "@semantic-release/github"
       EOF
-    - semantic-release --debug
+    - semantic-release --dry-run
     - if [ -f nextVersion ]; then 
         echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
       else 
         echo "SRTAG=${SHORT_SHA:-latest}" >> vars.env;
       fi
     - cat vars.env
-    - cat nextVersion || echo "No nextVersion file found"
+    - cat nextVersion
   artifacts:
     reports:
       dotenv: vars.env
+
+
 
 build_and_push:
   stage: build
@@ -88,3 +92,7 @@ build_and_push:
   artifacts:
     reports:
       dotenv: vars.env
+
+
+
+
