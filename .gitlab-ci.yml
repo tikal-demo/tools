@@ -33,7 +33,6 @@ prepare:
 semantic_release_prep:
   stage: prepare
   script:
-    - cat vars.env
     - echo $SHORT_SHA
     - npm install -g semantic-release
     - npm install -g @semantic-release/git @semantic-release/gitlab @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/exec
