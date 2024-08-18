@@ -50,14 +50,13 @@ semantic_release_prep:
         - "@semantic-release/gitlab"
         - "@semantic-release/exec"
       EOF
-    - semantic-release --dry-run
+    - semantic-release --debug
     - if [ -f nextVersion ]; then 
         echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
       else 
         echo "SRTAG=${SHORT_SHA:-latest}" >> vars.env;
       fi
     - cat vars.env
-    - cat nextVersion
   artifacts:
     reports:
       dotenv: vars.env
@@ -82,6 +81,7 @@ build_and_push:
       docker buildx build --platform linux/amd64,linux/arm64 \
         --build-arg SRTAG=$SRTAG \
         --tag $REGISTRY/$IMAGE_NAME:latest \
+        --tag $REGISTRY/$IMAGE_NAME:latest-$CI_COMMIT_REF_NAME \
         --tag $REGISTRY/$IMAGE_NAME:$SRTAG \
         --push .
   only:
@@ -90,7 +90,6 @@ build_and_push:
   artifacts:
     reports:
       dotenv: vars.env
-
 
 
 
