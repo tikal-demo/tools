@@ -48,8 +48,9 @@ semantic_release_prep:
         - "@semantic-release/gitlab"
         - "@semantic-release/exec"
       EOF
-    - GIT_CREDENTIALS="https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
-    - semantic-release --dry-run --debug -r $GIT_CREDENTIALS
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - sleep 20
+    - semantic-release --dry-run --debug -r $CI_REPOSITORY_URL
     - if [ -f nextVersion ]; then 
         echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
       else 
