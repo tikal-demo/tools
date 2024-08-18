@@ -48,7 +48,7 @@ semantic_release_prep:
         - "@semantic-release/gitlab"
         - "@semantic-release/exec"
       EOF
-    - semantic-release --dry-run --debug
+    - semantic-release --dry-run --debug -r $CI_REPOSITORY_URL
     - if [ -f nextVersion ]; then 
         echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
       else 
