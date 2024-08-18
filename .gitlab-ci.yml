@@ -9,7 +9,7 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 default:
-  image: docker:latest
+  image: node:12.16.1
   services:
     - docker:dind
 
