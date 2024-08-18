@@ -14,7 +14,7 @@ default:
     - docker
 
 before_script:
-  - apk add --no-cache curl jq git
+  - apt-get update && apt-get install -y curl jq git xz-utils
   - curl -o node-v12.16.1-linux-x64.tar.xz https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz
   - tar -xf node-v12.16.1-linux-x64.tar.xz
   - cp -r node-v12.16.1-linux-x64/* /usr/local/
