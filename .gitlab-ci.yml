@@ -49,6 +49,7 @@ semantic_release_prep:
         - "@semantic-release/git"
         - "@semantic-release/gitlab"
         - "@semantic-release/exec"
+          - verifyReleaseCmd: echo ${nextRelease.version} > nextVersion
       EOF
     - semantic-release --debug
     - if [ -f nextVersion ]; then 
@@ -57,6 +58,7 @@ semantic_release_prep:
         echo "SRTAG=${SHORT_SHA:-latest}" >> vars.env;
       fi
     - cat vars.env
+    - cat nextVersion
   artifacts:
     reports:
       dotenv: vars.env
