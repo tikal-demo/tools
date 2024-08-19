@@ -1,3 +1,11 @@
+# [1.0.0-dev.2](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2024-08-19)
+
+
+### Bug Fixes
+
+* enable docker build ([e0d7e28](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/commit/e0d7e288e95a444417636685a2e3479664b80348))
+* enable docker build ([4e0eea6](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/commit/4e0eea653a0c2383a81045d9dba8f68068f058bc))
+
 # 1.0.0-dev.1 (2024-08-19)
 
 
