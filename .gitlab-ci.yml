@@ -1,7 +1,7 @@
 stages:
   - prepare
   # - build
-  - releae
+  - release
 
 variables:
   CI_REGISTRY: gitlab.tikalk.dev:5050
