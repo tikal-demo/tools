@@ -1,0 +1,91 @@
+stages:
+  - prepare
+  - build
+  - release
+
+variables:
+  CI_REGISTRY: gitlab.tikalk.dev:5050
+  CI_REGISTRY_IMAGE: gitlab.tikalk.dev:5050/tikalk/engineering/bootstrap/tools
+  CI_REGISTRY_PASSWORD: $GITLAB_TOKEN
+  REGISTRY: "$CI_REGISTRY"
+  IMAGE_NAME: "$CI_PROJECT_PATH"
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_TLS_CERTDIR: ""
+
+default:
+  image: docker:latest
+  services:
+    - docker:dind
+
+semantic_release:
+  stage: prepare
+  before_script:
+    - apk add --no-cache curl jq nodejs npm git
+    - npm install -g semantic-release
+    - npm install -g @semantic-release/git @semantic-release/gitlab @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/exec
+    - |
+      cat <<EOF > .releaserc.yml
+      branches:
+        - main
+        - name: dev
+          prerelease: true
+      plugins:
+        - "@semantic-release/commit-analyzer"
+        - "@semantic-release/release-notes-generator"
+        - "@semantic-release/changelog"
+        - "@semantic-release/git"
+        - "@semantic-release/gitlab"
+        - "@semantic-release/exec"
+      EOF
+  script:
+    # short commit sha from
+    - echo $CI_COMMIT_SHORT_SHA
+    # semantic-release install
+    - semantic-release --dry-run --debug -r $CI_REPOSITORY_URL
+    - if [ -f nextVersion ]; then 
+        echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
+      else 
+        echo "SRTAG=${SHORT_SHA:-latest}" >> vars.env;
+      fi
+    - cat vars.env
+  artifacts:
+    reports:
+      dotenv: vars.env
+
+build_and_push:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - sleep 20
+    - docker buildx create --use
+    - docker buildx inspect --bootstrap
+    - echo $REGISTRY
+    - echo $IMAGE_NAME
+    - echo $SRTAG
+    - echo $CI_COMMIT_REF_NAME
+    - |
+      docker buildx build --platform linux/amd64,linux/arm64 \
+        --build-arg SRTAG=$SRTAG \
+        --tag $REGISTRY/$IMAGE_NAME:latest \
+        --tag $REGISTRY/$IMAGE_NAME:latest-$CI_COMMIT_REF_NAME \
+        --tag $REGISTRY/$IMAGE_NAME:$SRTAG \
+        --push .
+  only:
+    refs:
+      - branches
+  artifacts:
+    reports:
+      dotenv: vars.env
+
+release:
+  stage: release
+  extends:
+    - semantic_release
+  script:
+    - semantic-release --debug -r $CI_REPOSITORY_URL
+
+  
+
