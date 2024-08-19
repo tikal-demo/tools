@@ -1,6 +1,6 @@
 stages:
   - prepare
-  # - build
+  - build
   - release
 
 variables:
