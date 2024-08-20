@@ -35,17 +35,18 @@ semantic_release:
         - "@semantic-release/changelog"
         - "@semantic-release/git"
         - "@semantic-release/gitlab"
-        - "@semantic-release/exec"
+        - - "@semantic-release/exec"
+          - verifyReleaseCmd: echo \${nextRelease.version} > nextVersion
       EOF
   script:
-    # short commit sha from
+    # short commit sha from default variables
     - echo $CI_COMMIT_SHORT_SHA
     # semantic-release install
     - semantic-release --dry-run --debug -r $CI_REPOSITORY_URL
     - if [ -f nextVersion ]; then 
         echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
       else 
-        echo "SRTAG=${SHORT_SHA:-latest}" >> vars.env;
+        echo "SRTAG=${CI_COMMIT_SHORT_SHA:-latest}" >> vars.env;
       fi
     - cat vars.env
   artifacts:
@@ -67,12 +68,12 @@ build_and_push:
     - echo $SRTAG
     - echo $CI_COMMIT_REF_NAME
     - |
-      docker buildx build --platform linux/amd64,linux/arm64 \
+      echo "docker buildx build --platform linux/amd64,linux/arm64 \
         --build-arg SRTAG=$SRTAG \
         --tag $REGISTRY/$IMAGE_NAME:latest \
         --tag $REGISTRY/$IMAGE_NAME:latest-$CI_COMMIT_REF_NAME \
         --tag $REGISTRY/$IMAGE_NAME:$SRTAG \
-        --push .
+        --push ."
   only:
     refs:
       - branches
