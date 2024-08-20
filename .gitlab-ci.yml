@@ -68,12 +68,12 @@ build_and_push:
     - echo $SRTAG
     - echo $CI_COMMIT_REF_NAME
     - |
-      echo "docker buildx build --platform linux/amd64,linux/arm64 \
+      docker buildx build --platform linux/amd64,linux/arm64 \
         --build-arg SRTAG=$SRTAG \
         --tag $REGISTRY/$IMAGE_NAME:latest \
         --tag $REGISTRY/$IMAGE_NAME:latest-$CI_COMMIT_REF_NAME \
         --tag $REGISTRY/$IMAGE_NAME:$SRTAG \
-        --push ."
+        --push .
   only:
     refs:
       - branches
