@@ -1,3 +1,11 @@
+# [1.0.0-dev.4](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2024-08-20)
+
+
+### Bug Fixes
+
+* update git config ([d3c941e](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/commit/d3c941e67e6b092c074e2cfbd8dd49cf8f827a16))
+* update git config ([382ec7e](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/commit/382ec7e46bde61062c714c9846bd2c613a5fe722))
+
 # [1.0.0-dev.3](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2024-08-20)
 
 
