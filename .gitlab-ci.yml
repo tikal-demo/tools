@@ -87,6 +87,5 @@ release:
     - semantic_release
   script:
     - git config --global user.name "TikalBot"
-    - git config --global email "TikalBot@tikalk.dev"
-    # - git ls-remote $CI_REPOSITORY_URL
+    - git config --global user.email "TikalBot@tikalk.dev"
     - semantic-release --debug -r $CI_REPOSITORY_URL
