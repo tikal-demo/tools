@@ -1,3 +1,10 @@
+# [1.0.0-dev.3](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2024-08-20)
+
+
+### Bug Fixes
+
+* perform fix release ([21b564e](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/commit/21b564e8c44c32e244b40fc5e22d697dea01aa1a))
+
 # [1.0.0-dev.2](https://gitlab.tikalk.dev/tikalk/engineering/bootstrap/tools/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2024-08-19)
 
 
