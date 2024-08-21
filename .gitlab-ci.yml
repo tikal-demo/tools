@@ -74,12 +74,6 @@ build_and_push:
         --tag $REGISTRY/$IMAGE_NAME:latest-$CI_COMMIT_REF_NAME \
         --tag $REGISTRY/$IMAGE_NAME:$SRTAG \
         --push .
-  only:
-    refs:
-      - branches
-  artifacts:
-    reports:
-      dotenv: vars.env
 
 release:
   stage: release
