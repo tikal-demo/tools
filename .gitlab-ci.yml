@@ -89,3 +89,5 @@ release:
     - git config --global user.name "TikalBot"
     - git config --global user.email "TikalBot@tikalk.dev"
     - semantic-release --debug -r $CI_REPOSITORY_URL
+
+    
