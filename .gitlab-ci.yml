@@ -35,17 +35,18 @@ semantic_release:
         - "@semantic-release/changelog"
         - "@semantic-release/git"
         - "@semantic-release/gitlab"
-        - "@semantic-release/exec"
+        - - "@semantic-release/exec"
+          - verifyReleaseCmd: echo \${nextRelease.version} > nextVersion
       EOF
   script:
-    # short commit sha from
+    # short commit sha from default variables
     - echo $CI_COMMIT_SHORT_SHA
     # semantic-release install
     - semantic-release --dry-run --debug -r $CI_REPOSITORY_URL
     - if [ -f nextVersion ]; then 
         echo "SRTAG=v$(cat nextVersion)" >> vars.env; 
       else 
-        echo "SRTAG=${SHORT_SHA:-latest}" >> vars.env;
+        echo "SRTAG=${CI_COMMIT_SHORT_SHA:-latest}" >> vars.env;
       fi
     - cat vars.env
   artifacts:
@@ -79,7 +80,8 @@ release:
   extends:
     - semantic_release
   script:
+    - git config --global user.name "TikalBot"
+    - git config --global user.email "TikalBot@tikalk.dev"
     - semantic-release --debug -r $CI_REPOSITORY_URL
 
-  
-
+    
