@@ -89,7 +89,7 @@ jobs:
         tags: |
           type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
           type=raw,value=latest-${{ github.ref_name }}
-        #   type=raw,value=${{ steps.semantic_release_prep.outputs.SRTAG }}
+          type=raw,value=${{ steps.semantic_release_prep.outputs.SRTAG }}
 
     - name: Build and push Docker image
       id: build_n_push
@@ -110,8 +110,8 @@ jobs:
     - name: Finalize and execute semantic-release
       id: semantic_release
       run: |
-        git config --global user.name "GitHubBot"
-        git config --global user.email "GitHubBot@github.com"
+        git config --global user.name "EvgeniTikal"
+        git config --global user.email "evgeni.sakhatsky@tikalk.com"
         semantic-release --debug -r ${{ github.server_url }}/${{ github.repository }}.git
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
